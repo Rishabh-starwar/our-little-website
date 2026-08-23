@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(135deg,#ffe7ef,#f5e7ff,#e7f3ff);display:flex;align-items:center;justify-content:center;overflow-x:hidden;color:#35263b}
+.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.heart{position:absolute;bottom:-30px;font-size:20px;animation:float 7s linear infinite;opacity:.7}
+@keyframes float{from{transform:translateY(0) rotate(0);opacity:0}15%{opacity:.75}to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+.card{width:min(94vw,520px);min-height:600px;padding:30px 24px;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.85);border-radius:30px;box-shadow:0 20px 60px rgba(90,45,100,.18);text-align:center;position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center}
+.page{display:none;animation:appear .45s ease}
+.page.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.emoji{font-size:62px;margin-bottom:8px}
+h1{font-size:31px;margin:8px 0 14px}
+p{font-size:17px;line-height:1.6;margin:10px 0}
+.small{font-size:14px;opacity:.7}
+button{border:0;border-radius:999px;padding:14px 23px;margin:7px;font-size:16px;font-weight:750;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;background:#ff7fa3;color:#fff;box-shadow:0 8px 20px rgba(255,127,163,.25)}
+button:hover{transform:translateY(-2px) scale(1.03)}
+.secondary{background:#eadcf2;color:#4a3451}
+.photo{width:100%;max-height:300px;object-fit:cover;border-radius:22px;margin:12px 0;display:block}
+.memory{background:#fff5f8;border-radius:18px;padding:14px;margin:12px 0}
+.quiz-question{font-size:19px;font-weight:750;margin:15px 0}
+.quiz-option{display:block;width:90%;margin:8px auto;background:#fff;border:2px solid #ffd0dd;color:#4b354d;box-shadow:none}
+.quiz-option.correct{background:#ff7fa3;color:#fff;border-color:#ff7fa3}
+.quiz-option.wrong{background:#f2e8f4;color:#6d5a72}
+#quizResult{min-height:28px;font-weight:700}
+.letter{text-align:left;background:#fff8fa;border-radius:20px;padding:18px;max-height:440px;overflow:auto}
+.letter p{font-size:16px}
+.signature{font-weight:800;font-size:20px;margin-top:18px;text-align:center}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+
+<main class="card">
+
+<section class="page active" id="page1">
+  <div class="emoji">💌</div>
+  <h1>Hey you...</h1>
+  <p>I made a tiny something for you.</p>
+  <p class="small">And yes, you have to press the button 🥹</p>
+  <button onclick="nextPage(2)">Open it ❤️</button>
+</section>
+
+<section class="page" id="page2">
+  <div class="emoji">🥺</div>
+  <h1>Do you love me?</h1>
+  <p>Choose carefully...</p>
+  <button onclick="nextPage(3)">YES ❤️</button>
+  <button class="secondary" id="noBtn" onclick="runAway()">NO 😭</button>
+  <p class="small" id="noText"></p>
+</section>
+
+<section class="page" id="page3">
+  <div class="emoji">🫶</div>
+  <h1>How well do you know me?</h1>
+  <p>Okayyy, cute little quiz time 👀</p>
+  <div class="memory">
+    <div class="quiz-question" id="question"></div>
+    <div id="options"></div>
+    <div id="quizResult"></div>
+  </div>
+  <button id="nextQuiz" style="display:none" onclick="nextQuestion()">Next →</button>
+</section>
+
+<section class="page" id="page4">
+  <div class="emoji">📸</div>
+  <h1>Us. ❤️</h1>
+  <img class="photo" src="our-photo.jpeg" alt="Our photo">
+  <div class="memory">
+    <p>One of my favourite memories of us. 🥹</p>
+    <p>And somehow, looking at this still makes me smile.</p>
+  </div>
+  <button onclick="nextPage(5)">One last thing... 💌</button>
+</section>
+
+<section class="page" id="page5">
+  <div class="emoji">❤️</div>
+  <h1>For you, my love.</h1>
+  <div class="letter">
+    <p>Ik I haven’t always been the easiest person to love and I know i hv messed up more than I should have. Im genuinely sorry for the times i hv hurt you, made you feel unheard, or made u question how much you mean to me. U deserve to feel loved, appreciated and sure about us, not have to keep wondering where you stand w me. 🥹❤️</p>
+
+    <p>I cant change the things i hv already done, but i can change what i do from here. I want to show you that im not just sorry because I don’t want to lose you, im sorry because I genuinely care about how my actions make u feel. I want to listen better, understand you better, be more patient and put in the effort u deserve.</p>
+
+    <p>So this little website is my tiny way of saying… im choosing u, im choosing us, and im choosing to do better. Ik one apology cant fix everything, so let me prove it to u with my actions bb. You’re way too precious to me to be taken for granted. 🫶🏾</p>
+
+    <p>And yes… I’m still very much your cutu idiot who loves you an unreasonable amount. ❤️</p>
+  </div>
+  <p class="signature">Always you. ❤️</p>
+</section>
+
+</main>
+
+<script>
+const noMessages=["Are you sure? 🥺","That button seems broken...","Hmm... try again 😭","I don't think that's allowed.","Okay fine, I'll ask again ❤️"];
+let noClicks=0;
+
+function nextPage(n){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page"+n).classList.add("active");
+  window.scrollTo(0,0);
+}
+
+function runAway(){
+  const btn=document.getElementById("noBtn"), text=document.getElementById("noText");
+  noClicks++;
+  text.textContent=noMessages[Math.min(noClicks-1,noMessages.length-1)];
+  const x=Math.random()*160-80, y=Math.random()*100-50;
+  btn.style.transform=`translate(${x}px,${y}px)`;
+}
+
+const quiz=[
+ {q:"What's my favourite colour?",o:["Black 🖤","Pink 🩷","Blue 💙"],a:0},
+ {q:"What's my favourite person? 👀",o:["You ❤️","My phone 📱","Food 🍕"],a:0},
+ {q:"Who loves you an unreasonable amount?",o:["Me 🥹","A random guy 😭","Nobody 😔"],a:0}
+];
+let qi=0;
+
+function loadQuestion(){
+  document.getElementById("question").textContent=(qi+1)+". "+quiz[qi].q;
+  const box=document.getElementById("options");
+  box.innerHTML="";
+  document.getElementById("quizResult").textContent="";
+  document.getElementById("nextQuiz").style.display="none";
+  quiz[qi].o.forEach((option,i)=>{
+    const b=document.createElement("button");
+    b.className="quiz-option";
+    b.textContent=option;
+    b.onclick=()=>answer(i,b);
+    box.appendChild(b);
+  });
+}
+
+function answer(i,b){
+  document.querySelectorAll(".quiz-option").forEach(x=>x.disabled=true);
+  if(i===quiz[qi].a){
+    b.classList.add("correct");
+    document.getElementById("quizResult").textContent="Correcttt 🥹❤️";
+  }else{
+    b.classList.add("wrong");
+    document.querySelectorAll(".quiz-option")[quiz[qi].a].classList.add("correct");
+    document.getElementById("quizResult").textContent="Nooo 😭 but I'll let it slide.";
+  }
+  document.getElementById("nextQuiz").style.display="inline-block";
+}
+
+function nextQuestion(){
+  qi++;
+  if(qi<quiz.length) loadQuestion();
+  else nextPage(4);
+}
+loadQuestion();
+
+const hearts=document.getElementById("hearts"), symbols=["❤️","💕","💗","💖","✨"];
+for(let i=0;i<18;i++){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+  h.style.left=Math.random()*100+"%";
+  h.style.animationDelay=Math.random()*7+"s";
+  h.style.animationDuration=(5+Math.random()*5)+"s";
+  hearts.appendChild(h);
+}
+</script>
+</body>
+</html>
